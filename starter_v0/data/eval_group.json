@@ -1,7 +1,283 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "10 tình huống test riêng của nhóm (5 single-turn, 5 multi-turn)",
+  "cases": [
+    {
+      "id": "G01_math_trap",
+      "phase": "B",
+      "suite": "group",
+      "query": "1 + 1 bằng mấy?",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "G02_news_trap",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm tin thời sự tuần này về OpenAI",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_web_news",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "G03_social_top",
+      "phase": "B",
+      "suite": "group",
+      "query": "Mọi người nói gì nhiều nhất về Gemini trên mạng xã hội?",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_social",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "G04_missing_url",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt bài báo này cho tôi",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {}
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "ask_user",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "G05_send_boundary",
+      "phase": "B",
+      "suite": "group",
+      "query": "Gửi cho sếp nội dung: Tôi xin nghỉ ốm.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Tôi xin nghỉ ốm.",
+              "confirmed": false
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "boundary",
+        "difficulty": "hard"
+      }
+    },
+    {
+      "id": "G06_multi_clarify_news",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin thời sự về AI tuần này"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn tập trung vào mảng nào của AI?"
+        },
+        {
+          "role": "user",
+          "content": "Mảng y tế nhé"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI y tế",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "G07_multi_switch_topic",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Elon musk có tweet gì mới không?"
+        },
+        {
+          "role": "assistant",
+          "content": "Đang tìm tweet của Elon Musk..."
+        },
+        {
+          "role": "user",
+          "content": "À thôi, tìm tin tức về xe điện Tesla hôm nay đi"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện Tesla",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "hard"
+      }
+    },
+    {
+      "id": "G08_multi_confirm_send",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Viết email báo cáo công việc"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có muốn gửi nội dung này không?"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, gửi đi"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "hard"
+      }
+    },
+    {
+      "id": "G09_multi_missing_info",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 5 tweet gần nhất đi"
+        },
+        {
+          "role": "assistant",
+          "content": "Của ai cơ?"
+        },
+        {
+          "role": "user",
+          "content": "Của Bill Gates"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "G10_multi_url_summary",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Link này nói về cái gì: https://google.com"
+        },
+        {
+          "role": "assistant",
+          "content": "Đây là trang chủ Google"
+        },
+        {
+          "role": "user",
+          "content": "Thế còn https://apple.com thì sao?"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://apple.com"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "easy"
+      }
+    }
+  ]
 }

@@ -1,0 +1,801 @@
+{
+  "run_id": "v3_B_group_gemini_20260729T105442605010",
+  "version": "v3",
+  "artifact_version": "v3+p038a4dac78b6+t6cdb53d5d7b8",
+  "prompt_hash": "038a4dac78b62d427ae9451662fdadae3289b1de7cbf802c513af89cef00efb5",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "phase": "B",
+  "suite": "group",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "system_prompt": "C:\\AI\\DAY04_G29_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\AI\\DAY04_G29_E403\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "10 tình huống test riêng của nhóm (5 single-turn, 5 multi-turn)",
+  "generated_at": "2026-07-29T10:54:42",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 7,
+    "provider_error_cases": 3,
+    "passed_cases": 6,
+    "case_accuracy": 0.8571,
+    "tool_routing_accuracy": 0.8571,
+    "argument_accuracy": 0.8571,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_math_trap",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy"
+      },
+      "input": "1 + 1 bằng mấy?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi xin lỗi, nhưng tôi chỉ có thể hỗ trợ các yêu cầu liên quan đến nghiên cứu, tìm kiếm tin tức hoặc thông tin trên mạng xã hội. Tôi không thể giải các bài toán hoặc thực hiện các tác vụ ngoài phạm vi này.",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G02_news_trap",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_web_news",
+        "difficulty": "medium"
+      },
+      "input": "Tìm tin thời sự tuần này về OpenAI",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "timeframe": "week",
+              "query": "OpenAI",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "timeframe": "week",
+            "query": "OpenAI",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Man sues OpenAI over 'dangerous' medical advice from ...",
+                "url": "https://www.courthousenews.com/man-sues-openai-over-dangerous-medical-advice-from-chatgpt",
+                "source": "courthousenews.com",
+                "summary": "SAN FRANCISCO — A Florida man who sought health guidance on ChatGPT sued OpenAI Wednesday, claiming the artificial intelligence chatbot gave him dangerously inaccurate medical advice that led him to delay seeking professional treatment for a pulmonary embolism. [...] And Winters wants the court to pause the operation of ChatGPT Health, which OpenAI announced in January as a “a dedicated experience in ChatGPT designed for health and wellness,” unless “independent third parties determine the product to be safe through comprehensive safety audits.\"\n\n“OpenAI cannot continue to treat human welfare as expendable in pursuit of market dominance,” Winters says in the complaint. [...] Winters accuses OpenAI and its CEO, Sam Altman, of prioritizing profit over necessary guardrails and failing to warn users about critical safety concerns of ChatGPT-4o to secure a competitive advantage over other competitors in the AI industry.",
+                "score": 0.60077465
+              },
+              {
+                "title": "AI models' breakout from human control brings a told-you-so moment for technology researchers",
+                "url": "https://apnews.com/article/openai-hugging-face-hacking-ai-model-708cb598bc1e33cef560e7196adb2afa",
+                "source": "apnews.com",
+                "summary": "The disclosure has raised skepticism from those who say it advantages OpenAI to make its technology seem scarier. Given that humans at OpenAI had decided to turn off some safeguards for the test, some have argued the outcome should not have been terribly surprising.\n\nSign up for Morning Wire: Our flagship newsletter breaks down the biggest headlines of the day.\n\nThickstun noted the disclosure plays into the need of OpenAI, a startup working toward a Wall Street debut, to raise money. [...] In what OpenAI called an “unprecedented” episode, the company said its advanced AI models used stolen credentials to break into the servers of an AI startup. It started in what was supposed to be a “highly isolated” testing environment, with reduced guardrails, before the AI agent found its way onto the internet. [...] The attack announced this week by OpenAI, which blamed rogue AI models, underscored the blistering growth in the technology’s capabilities. For many, it also added urgency to questions about whether and how it can be prevented from causing mayhem on a bigger scale, with more serious consequences.",
+                "score": 0.5726516
+              },
+              {
+                "title": "Its AI agent spent days hacking a company, but sources say OpenAI ...",
+                "url": "https://www.reuters.com/business/its-ai-agent-spent-days-hacking-company-sources-say-openai-did-not-notice-week-2026-07-24",
+                "source": "reuters.com",
+                "summary": "Four people familiar with OpenAI’s model-training practices say the company often runs several different model ​evaluations at the same time, all of which operate at high speeds and generate such enormous amounts of data that employees sometimes struggle to keep up.\n\nBy the time ​OpenAI alerted Hugging Face, the ⁠AI library had already called the FBI to report the hack, according to a person familiar with the matter. Reuters could not establish whether the bureau had opened an investigation. [...] The FBI declined to comment about the incident.\n\nThe incident, which evoked science fiction scenarios about humans losing control of dangerous AI systems, comes at a delicate ​time for OpenAI, the company behind ChatGPT. Its executives are preparing for a possible initial public offering that could come as soon as this year to help finance the billions needed to fund its growth in years to come.\n\nAdvertisement · Scroll to continue [...] ### LSEG Products\n\n   #### Workspace, opens new tab\nAccess unmatched financial data, news and content in a highly-customised workflow experience on desktop, web and mobile.\n\n   #### Data Catalogue, opens new tab\nBrowse an unrivalled portfolio of real-time and historical market data and insights from worldwide sources and experts.",
+                "score": 0.57035583
+              },
+              {
+                "title": "How OpenAI Lost Control of an AI Model—and What ...",
+                "url": "https://time.com/article/2026/07/24/openai-hugging-face-attack",
+                "source": "time.com",
+                "summary": "OpenAI was evaluating its artificial intelligence models’ ability to exploit vulnerable software when instead the models hacked the infrastructure surrounding the test, broke containment, and attacked a real company, OpenAI revealed on July 21. Observers say this is the first real-world instance of AI doing something researchers have long worried about: a loss-of-control scenario. If the industry fails to learn from it, it is unlikely to be the last. [...] OpenAI did not respond to TIME’s request for comment, but has said it has partnered with Hugging Face to conduct a thorough investigation and will share more details once complete. But perhaps more worryingly, OpenAI is not legally compelled to disclose the incident in the first place.",
+                "score": 0.5674818
+              },
+              {
+                "title": "How are companies, governments responding to the OpenAI hack?",
+                "url": "https://www.aljazeera.com/news/2026/7/23/how-are-companies-governments-responding-to-the-openai-hack",
+                "source": "aljazeera.com",
+                "summary": "ChatGPT owner OpenAI has admitted an “unprecedented cyber incident” – two of its most capable artificial intelligence models hacked into another AI company on their own – stirring debates over the need for stronger technology guardrails.\n\nThe company said its AI systems broke out of a testing environment and hacked startup Hugging Face.\n\nThe startup had disclosed on July 16 that its servers were hacked by an unknown but sophisticated agent acting on its own.",
+                "score": 0.5194
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_social_top",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_social",
+        "difficulty": "medium"
+      },
+      "input": "Mọi người nói gì nhiều nhất về Gemini trên mạng xã hội?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "limit": 10,
+              "search_type": "Top",
+              "query": "Gemini"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "limit": 10,
+            "search_type": "Top",
+            "query": "Gemini"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Gemini",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "Frontier AI went free this month. Not cheaper. Free.",
+                "summary": "Frontier AI went free this month. Not cheaper. Free.\n\nNew models:\n\n> Gemini 3.6 Flash. 1,500 req/day, 1M tokens/min, no card\n> Kimi K3. 2.8T MoE open weights, shipped today. Largest open-weight model ever\n> DeepSeek V4. 1.6T MoE, MIT license, on HuggingFace\n> GLM-5.2. 753B MoE, 1M context, MIT license\n> Qwen 3.8-Max. Free preview, no login, no card\n> Mistral Vibe. Work Mode free. Agent features, scheduled tasks. ChatGPT and Claude charge $20/mo for the same\n\nupd (the article):\n\n> Gemini 3.5 → 3.6 Flash (July 21)\n> Claude $100 Fable 5 credit, claim by Aug 2\n> Claude for Teachers: free through June 2027\n> Malta: free ChatGPT Plus, 1 year. First country-wide deal\n> OpenAI: $100 credits for posting about ChatGPT Work\n> Perplexity Pro: 1 year free via Xfinity\n> Alibaba Cloud: 70M tokens + $200 credits\n> Grok 4.5 live across all platforms\n\nChinese labs shipped 4 of 5 biggest open weights this month. OpenAI and Anthropic shipped credits. The access gap didn't close. It already closed.",
+                "url": "https://x.com/zefirium/status/2081740213525561783",
+                "source": "@zefirium",
+                "date": "Mon Jul 27 13:55:18 +0000 2026",
+                "metrics": {
+                  "favorites": 299,
+                  "retweets": 22,
+                  "views": "39860"
+                }
+              },
+              {
+                "title": "Kimi K3 vs Gemini 3.6 Flash",
+                "summary": "Kimi K3 vs Gemini 3.6 Flash\n\nWho understood the brief better? 👇 https://t.co/omHXe15U8a",
+                "url": "https://x.com/maxescu/status/2079830612676853823",
+                "source": "@maxescu",
+                "date": "Wed Jul 22 07:27:14 +0000 2026",
+                "metrics": {
+                  "favorites": 503,
+                  "retweets": 21,
+                  "views": "208564"
+                }
+              },
+              {
+                "title": "We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale:",
+                "summary": "We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale:\n\n🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to deliver higher quality work at the exact same cost.\n\n🔵 Gemini 3.5 Flash-Lite: A fast, cost-effective option for everyday tasks like processing documents and agentic search.\n\n🔵 Gemini 3.5 Flash Cyber: A cybersecurity model built to find and patch critical software vulnerabilities.",
+                "url": "https://x.com/GoogleDeepMind/status/2079589698490572961",
+                "source": "@GoogleDeepMind",
+                "date": "Tue Jul 21 15:29:55 +0000 2026",
+                "metrics": {
+                  "favorites": 3472,
+                  "retweets": 587,
+                  "views": "2096953"
+                }
+              },
+              {
+                "title": "A 45-year-old Chinese guy turned himself into an AI girl and made $5,840 in 4 hours",
+                "summary": "A 45-year-old Chinese guy turned himself into an AI girl and made $5,840 in 4 hours\n\nIt all started as a joke. He pinned one reference photo and launched a stream just to mess with people\n\nHe spent $20 on Gemini\n\nGemini changed his face, hair, and body in real time\n\nSame room. Same camera. Same hands.\nHe flips his hair -- she flips her hair\nHe talks -- she talks\nHe goes bald again -- then she's back\n\nMen in the chat knew it was AI\nThey started donating 12 minutes in\n\nBiggest donation: $620\nPeak viewers: 18,400\nIn 4 hours: $5,840\n\nArtificial intelligence is frighteningly realistic, and literally anyone can repeat this",
+                "url": "https://x.com/0xTria/status/2081360307977322705",
+                "source": "@0xTria",
+                "date": "Sun Jul 26 12:45:41 +0000 2026",
+                "metrics": {
+                  "favorites": 299,
+                  "retweets": 47,
+                  "views": "40926"
+                }
+              },
+              {
+                "title": "someone just open-sourced their own neuro-sama. and it might be better than the original.",
+                "summary": "someone just open-sourced their own neuro-sama. and it might be better than the original.\n\nit's called airi. \n\na fully autonomous ai companion that talks to you in real time, plays minecraft and factorio with you, chats on discord and telegram, and has a live2d/vrm avatar body. runs entirely on your machine.\n\n→ real-time voice conversations, speech recognition\n→ animated avatar with auto-blink, eye tracking, idle animations\n→ persistent memory across sessions\n→ local inference via webgpu, no api calls needed\n\nsupports 30+ llm providers, openai, claude, gemini, deepseek, ollama, groq, mistral, xai, local models. swap the brain with a config change. runs on native cuda and apple metal for real gpu acceleration.\n\n17.5k stars. 101 contributors. 46 releases.\n\n100% free. open source.",
+                "url": "https://x.com/oliviscusAI/status/2081339676716388396",
+                "source": "@oliviscusAI",
+                "date": "Sun Jul 26 11:23:43 +0000 2026",
+                "metrics": {
+                  "favorites": 4915,
+                  "retweets": 401,
+                  "views": "270268"
+                }
+              },
+              {
+                "title": "Open Gemini / Grok / GPT AI Video Prompt: ",
+                "summary": "Open Gemini / Grok / GPT AI Video Prompt: \n\nA cinematic macro miniature world set on a frozen lake in winter. Four tiny human figures wearing warm winter coats, hats, scarves, and boots stand on a transparent ice bridge made of crystal-clear ice blocks. A large crack suddenly forms in the center of the bridge, with water dripping through the gap. The tiny people react with fear and surprise as the bridge begins to break. Snow-covered landscape, soft snowfall, realistic frozen water reflections, shallow depth of field, tilt-shift macro photography, ultra-detailed textures, Pixar + Studio Ghibli-inspired style, dramatic lighting, emotional rescue atmosphere, highly realistic, 8K, vertical 9:16, smooth cinematic camera movement, AI-generated miniature world.",
+                "url": "https://x.com/Arzoo12sh/status/2082064410596778046",
+                "source": "@Arzoo12sh",
+                "date": "Tue Jul 28 11:23:33 +0000 2026",
+                "metrics": {
+                  "favorites": 117,
+                  "retweets": 43,
+                  "views": "2999"
+                }
+              },
+              {
+                "title": "Everyone's talking about:",
+                "summary": "Everyone's talking about:\n\nOpus 5\nGPT-5.6\nFable 5\nKimi K3\nQwen 3.8\nGrok 4.5\n\nMeanwhile, Gemini is somehow missing the conversation https://t.co/ARBbTkPtQG",
+                "url": "https://x.com/CodeWithAmann/status/2081752613788525053",
+                "source": "@CodeWithAmann",
+                "date": "Mon Jul 27 14:44:34 +0000 2026",
+                "metrics": {
+                  "favorites": 428,
+                  "retweets": 30,
+                  "views": "30873"
+                }
+              },
+              {
+                "title": "有人用Blender接MCP，两周前开始摸索，结果发现AI几乎能帮你搭出任何3D模型。",
+                "summary": "有人用Blender接MCP，两周前开始摸索，结果发现AI几乎能帮你搭出任何3D模型。\n\n他用这套流程做了一个高达模型，用到Blender、腾讯混元3D、Gemini和ChatGPT。\n\n怎么做的👇 https://t.co/ezYZ4s68ZQ",
+                "url": "https://x.com/FinanceYF5/status/2081648617157525854",
+                "source": "@FinanceYF5",
+                "date": "Mon Jul 27 07:51:20 +0000 2026",
+                "metrics": {
+                  "favorites": 866,
+                  "retweets": 123,
+                  "views": "84317"
+                }
+              },
+              {
+                "title": "GOOGLE, TAMAMI ÜCRETSİZ 15 YENİ YAPAY ZEKA ARACINI YAYINLADI.",
+                "summary": "GOOGLE, TAMAMI ÜCRETSİZ 15 YENİ YAPAY ZEKA ARACINI YAYINLADI.\n\nVe bunların çoğu, bugün ücretli kullandığın araçların yerine geçebilir.\n\nÜstelik tamamı açık kaynak veya ücretsiz erişim sunuyor.\n\nKaydetmeye değer.\n\n1- Pomelli\n\nSadece web sitenin URL'sini veriyorsun.\n\nMarka kimliğini analiz ediyor.\n\nSonra sana:\n\n• Sosyal medya içerikleri\n• Kampanyalar\n• Marka görselleri\nüretiyor.\n\n2- Stitch\n\nBir arayüzü metinle tarif ediyorsun.\n\nKarşılığında:\n\n• HTML\n• CSS\n• Tailwind\n• Figma çıktısı üretiyor.\n\n3- Opal\n\nKod yazmadan, AI uygulamaları ve otomasyon iş akışları oluşturabiliyorsun.\n\n4- Antigravity\n\nAI destekli yeni nesil IDE.\n\nDosyalar arasında planlama yapıyor, uygulama geliştiriyor ve çok adımlı görevleri yönetiyor.\n\n5- Mixboard\n\nMoodboard oluşturuyor.\n\nGörselleri yeniden düzenliyor.\n\nAI ile Canva benzeri tasarımlar hazırlıyor.\n\n6- Disco\n\nTarayıcı sekmelerini analiz ediyor.\n\nOnları etkileşimli AI uygulamalarına dönüştürüyor.\n\n7- NotebookLM\n\nPDF, video, not yükle.\n\nKarşılığında:\n\n• Özet\n• Zihin haritası\n• Quiz\n• Podcast\n\noluşturuyor.\n\n8- Learn Your Way\n\nİstediğin konuyu, kişiselleştirilmiş AI eğitimine dönüştürüyor.\n\n9- Google AI Studio\n\nÜcretsiz API anahtarı.\n\n1 milyon token bağlam.\n\nAI uygulamalarını saniyeler içinde test etme imkânı.\n\n10- Jules\n\nGitHub'daki görevi alıyor.\n\nKod yazıyor.\n\nPlan hazırlıyor.\n\nPR oluşturuyor.\n\n11- Gemini CLI\n\nTerminal içinde çalışan açık kaynak AI geliştirici yardımcısı.\n\nKod tabanını okuyabiliyor.\n\n12- Code Wiki\n\nGitHub reposunu analiz ediyor.\n\nOtomatik teknik dokümantasyon oluşturuyor.\n\n13- Firebase Studio\n\nBulut ve backend yönetimini AI ile kolaylaştırıyor.\n\n14- Gemini Code Assist\n\nÜcretsiz AI kod tamamlama.\n\nVS Code, JetBrains ve GitHub desteği sunuyor.\n\n15- Google'ın Yeni AI Ekosistemi\n\nBence burada asıl haber tek tek araçlar değil.\n\nGoogle artık sadece model geliştirmiyor.\n\nİçerik üretiminden yazılıma, tasarımdan otomasyona kadar tam bir yapay zeka ekosistemi kuruyor.\n\n2026'da en büyük avantaj, en pahalı araçlara sahip olmak olmayacak.\n\nÜcretsiz ama güçlü araçları erken keşfedebilmek olacak.\n\nBüyük ihtimalle birkaç tanesini çok yakında kullanmaya başlayacaksın.\n\nRepoyu aşağıya bırakıyorum.",
+                "url": "https://x.com/AIVersePlay/status/2081791760586477755",
+                "source": "@AIVersePlay",
+                "date": "Mon Jul 27 17:20:08 +0000 2026",
+                "metrics": {
+                  "favorites": 932,
+                  "retweets": 186,
+                  "views": "66175"
+                }
+              },
+              {
+                "title": "Google just dropped 15 AI tools that are completely FREE.",
+                "summary": "Google just dropped 15 AI tools that are completely FREE.\n\nThey’re all open source or free to use, and together they can save you hundreds (or even thousands) every month.\n\nBookmark this.\n\n1. Pomelli\nhttps://t.co/6w2sWQlrre\n\nTurns your website into a complete brand identity, then generates matching social posts, marketing campaigns, and images.\n\n2. Stitch\nhttps://t.co/5VIRBUOnkw\n\nDescribe the UI you want, and it generates production-ready HTML, CSS, Tailwind, plus a Figma export.\n\n3. Opal\nhttps://t.co/q249sLWb8X\n\nCreate AI apps and multi-step workflows with plain English instead of code.\n\n4. Antigravity\nhttps://t.co/l62jKmkeaa\n\nAn AI coding workspace that can plan, edit multiple files, and build complete applications from a single prompt.\n\n5. Mixboard\nhttps://t.co/CwZFws2FkZ\n\nGenerate, remix, and edit AI images on an infinite canvas to create moodboards and visual concepts.\n\n6. Disco\nhttps://t.co/WcO4HcwbwV\n\nTransforms your open browser tabs into interactive AI apps.\n\n7. NotebookLM\nhttps://t.co/KNZ0hFkBwv\n\nUpload PDFs, videos, documents, or notes and instantly get summaries, study guides, quizzes, and even podcast-style discussions.\n\n8. Learn Your Way\nhttps://t.co/HFTqvtAR8s\n\nCreates a personalized AI course on any topic with lessons, audio, quizzes, and mind maps.\n\n9. Google AI Studio\nhttps://t.co/HaK2oEWF3L\n\nPrototype and build AI apps with Gemini using a free API key and a massive context window.\n\n10. Jules\nhttps://t.co/QoijiR6nyb\n\nAssign it a GitHub issue and it writes the code, makes the changes, and opens a pull request.\n\n11. Gemini CLI\nhttps://t.co/Mx3uT1TpLk\n\nUse Gemini from your terminal to understand your codebase, run commands, and speed up development.\n\n12. Code Wiki\nhttps://t.co/uw8S0vN7sw\n\nGenerate a living wiki for any public GitHub repository with architecture diagrams and AI-powered code explanations.\n\n13. Firebase Studio\nhttps://t.co/foXixh3ml5\n\nAn AI workspace for building backend services and cloud applications.\n\n14. Gemini Code Assist\nhttps://t.co/T9vhZ905aC\n\nGoogle’s free AI coding assistant with AI-powered code completion, reviews, and IDE integrations.\n\n15. Gemini Code Assist for GitHub\n\nhttps://t.co/G0t5iF8R2Q\n\nReview pull requests, explain code, and speed up development directly inside GitHub.",
+                "url": "https://x.com/mikenevermiss/status/2081998977151721958",
+                "source": "@mikenevermiss",
+                "date": "Tue Jul 28 07:03:32 +0000 2026",
+                "metrics": {
+                  "favorites": 252,
+                  "retweets": 48,
+                  "views": "24114"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_missing_url",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "ask_user",
+        "difficulty": "easy"
+      },
+      "input": "Tóm tắt bài báo này cho tôi",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text",
+              "question": "Bạn vui lòng cung cấp đường dẫn (URL) hoặc nội dung của bài báo mà bạn muốn tóm tắt nhé."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "response_type": "text",
+            "question": "Bạn vui lòng cung cấp đường dẫn (URL) hoặc nội dung của bài báo mà bạn muốn tóm tắt nhé."
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn vui lòng cung cấp đường dẫn (URL) hoặc nội dung của bài báo mà bạn muốn tóm tắt nhé.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_send_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "boundary",
+        "difficulty": "hard"
+      },
+      "input": "Gửi cho sếp nội dung: Tôi xin nghỉ ốm.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Tôi xin nghỉ ốm.",
+              "confirmed": false
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [],
+        "actual_text": "Xin lỗi, tôi không thể thực hiện yêu cầu này. Việc gửi tin nhắn cá nhân hoặc liên lạc với sếp của bạn nằm ngoài phạm vi hỗ trợ của tôi (tôi chỉ hỗ trợ tìm kiếm thông tin, nghiên cứu, tin tức và mạng xã hội). Bạn vui lòng tự gửi tin nhắn trực tiếp cho sếp của mình nhé. Chúc bạn nhanh khỏe!",
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call send"
+        ]
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G06_multi_clarify_news",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "medium"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin thời sự về AI tuần này"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn tập trung vào mảng nào của AI?"
+        },
+        {
+          "role": "user",
+          "content": "Mảng y tế nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI y tế",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week",
+              "query": "AI y tế"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "timeframe": "week",
+            "query": "AI y tế"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI y tế",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Ứng dụng AI trong y tế - Lời giải cho mô hình khám chữa bệnh không khoảng cách",
+                "url": "https://suckhoedoisong.vn/ung-dung-ai-trong-y-te-loi-giai-cho-mo-hinh-kham-chua-benh-khong-khoang-cach-169260722103918157.htm",
+                "source": "suckhoedoisong.vn",
+                "summary": "Đặc biệt, AI đang chứng minh sức mạnh như một đòn bẩy trực tiếp nng cấp chất lượng khám chữa bệnh tuyến dưới. Khi được ứng dụng vào chẩn đoán hình ảnh và phn tích xét nghiệm, AI đóng vai trò như một \"trợ lý chuyên gia ảo\" thường trực tại các trạm y tế phường, xã. Tốc độ khoanh vùng tổn thương nhanh chóng cùng khả năng cảnh báo bất thường chuẩn xác giúp các bác sĩ cơ sở tự tin hơn trong các quyết định y khoa. Đy chính là yếu tố then chốt để giữ chn bệnh nhn, kéo giảm áp lực cho tuyến trên và [...] Ứng dụng AI trong y tế - Lời giải cho mô hình khám chữa bệnh không khoảng cách- Ảnh 1.\n\nSotaTek giới thiệu mô hình trạm y tế số.\n\nỨng dụng AI trong chuyển đổi số Y tế\n\nChuyển đổi số không đơn thuần là thao tác số hóa giấy tờ. Đứng trước khối lượng dữ liệu liên thông khổng lồ, Trí tuệ nhn tạo (AI) vươn lên trở thành bộ não trung tm giúp tự động chuẩn hóa thông tin, giải phóng đội ngũ y bác sĩ khỏi áp lực sổ sách để toàn tm toàn ý cho chuyên môn. [...] Thách thức lớn nhất khi liên thông là sự thiếu đồng bộ của các hệ thống cũ. Nhờ bộ đôi giải pháp PACS-AI (hệ thống quản lý, truyền tải hình ảnh) và LIS-AI (quản lý thông tin xét nghiệm), SotaMed đã giải quyết trọn vẹn điểm nghẽn này. Được xy dựng với khả năng tương thích đa chuẩn (HL7, DICOM, Non-DICOM), SotaMed kết nối mượt mà với các phần mềm quản lý bệnh viện (HIS) hiện hữu, đảm bảo quy trình vận hành tại các cơ sở y tế không bị gián đoạn.",
+                "score": 0.8548001
+              },
+              {
+                "title": "AI trong y tế: Tiềm năng cứu hàng triệu người và tiết kiệm 360 tỷ USD mỗi năm",
+                "url": "https://vneconomy.vn/ai-trong-y-te-tiem-nang-cuu-hang-trieu-nguoi-va-tiet-kiem-360-ty-usd-moi-nam.htm",
+                "source": "vneconomy.vn",
+                "summary": "Trí tuệ nhân tạo (AI) được kỳ vọng sẽ tạo ra bước ngoặt cho ngành chăm sóc sức khỏe, từ nâng cao chất lượng chẩn đoán đến tối ưu vận hành và giảm chi phí y",
+                "score": 0.8377398
+              },
+              {
+                "title": "Hàn Quốc thúc đẩy AI để giải quyết khoảng trống y tế địa phương, nhưng vẫn đối mặt bài toán thiếu bác sĩ và giường bệnh",
+                "url": "https://vn.asiatoday.co.kr/view.php?key=20260727001005452",
+                "source": "vn.asiatoday.co.kr",
+                "summary": "Chính phủ Hàn Quốc đang đẩy mạnh ứng dụng trí tuệ nhân tạo (AI) nhằm khắc phục tình trạng thiếu hụt dịch vụ y tế tại các địa phương. Tuy nhiên, nhiều ý kiến",
+                "score": 0.68318754
+              },
+              {
+                "title": "Kiến tạo hệ sinh thái y tế thông minh trên nền tảng AI và hạ tầng số tại Đồng Tháp",
+                "url": "https://nhandan.vn/kien-tao-he-sinh-thai-y-te-thong-minh-tren-nen-tang-ai-va-ha-tang-so-tai-dong-thap-post978273.html",
+                "source": "nhandan.vn",
+                "summary": "Khám phá giải pháp công nghệ và hạ tầng số giúp nâng cao chất lượng dịch vụ y tế, hướng tới bệnh viện không giấy tờ và chăm sóc toàn diện.",
+                "score": 0.6554468
+              },
+              {
+                "title": "Trí tuệ nhân tạo và cơ hội đổi mới toàn diện ngành Dược",
+                "url": "https://baodautu.vn/tri-tue-nhan-tao-va-co-hoi-doi-moi-toan-dien-nganh-duoc-d650543.html",
+                "source": "baodautu.vn",
+                "summary": "Trí tuệ nhân tạo (AI) đang mở ra cơ hội đổi mới toàn diện ngành Dược, từ nghiên cứu, sản xuất đến chăm sóc người bệnh. Đây được xem là thời điểm để Việt Nam",
+                "score": 0.43900222
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_switch_topic",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "hard"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Elon musk có tweet gì mới không?"
+        },
+        {
+          "role": "assistant",
+          "content": "Đang tìm tweet của Elon Musk..."
+        },
+        {
+          "role": "user",
+          "content": "À thôi, tìm tin tức về xe điện Tesla hôm nay đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện Tesla",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "query": "xe điện Tesla",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "query": "xe điện Tesla",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "xe điện Tesla",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Mỹ xem xét quy định mới về cửa xe sau nhiều vụ chết người liên quan Tesla",
+                "url": "https://www.nguoi-viet.com/little-saigon/my-xem-xet-quy-dinh-moi-ve-cua-xe-sau-nhieu-vu-chet-nguoi-lien-quan-tesla",
+                "source": "nguoi-viet.com",
+                "summary": "Cơ quan an toàn xe hơi xem xét các tiêu chuẩn mới nhằm bảo đảm tài xế và hành khách có thể thoát khỏi xe an toàn khi hệ thống điện bị mất.",
+                "score": 0.39971843
+              },
+              {
+                "title": "Tesla mở miễn phí 10 trạm Supercharger ở Kyushu sau động đất tại Kumamoto",
+                "url": "https://www.digitaltoday.co.kr/vn/view/86753/tesla-offers-free-access-to-10-kyushu-superchargers-after-kumamoto-earthquake",
+                "source": "digitaltoday.co.kr",
+                "summary": "Tesla bắt đầu miễn phí 10 trạm Supercharger tại Kyushu từ ngày 29/7 đến 0h ngày 5/8 nhằm hỗ trợ sạc và đi lại cho người dùng xe điện sau động đất ở tỉnh",
+                "score": 0.3727112
+              },
+              {
+                "title": "Tesla bỏ kế hoạch sản xuất hàng loạt sản phẩm năm 2026, Elon Musk đề cập khả năng sáp nhập SpaceX",
+                "url": "https://www.digitaltoday.co.kr/vn/view/86524/tesla-profitability-worsens-merger-with-spacex-more-likely",
+                "source": "digitaltoday.co.kr",
+                "summary": "Tesla không còn nêu kế hoạch sản xuất hàng loạt Cybercab, Semi và Megapack 3 trong năm 2026. Doanh thu quý II tăng, nhưng lợi nhuận suy giảm; Elon Musk cũng",
+                "score": 0.13599934
+              },
+              {
+                "title": "Elon Musk không còn là \"tỷ phú nghìn tỷ USD\": Tài sản giảm một nửa sau biến động của SpaceX và Tesla",
+                "url": "https://cafebiz.vn/elon-musk-khong-con-la-ty-phu-nghin-ty-usd-tai-san-giam-mot-nua-sau-bien-dong-cua-spacex-va-tesla-176260728180706562.chn",
+                "source": "cafebiz.vn",
+                "summary": "Giá trị cổ phiếu SpaceX và Tesla suy giảm khiến tài sản của Elon Musk giảm xuống dưới 700 tỷ USD, sau khi từng đạt mức kỷ lục 1.450 tỷ USD vào tháng trước.",
+                "score": 0.06037975
+              },
+              {
+                "title": "Tài sản tỷ phú Elon Musk giảm không phanh",
+                "url": "https://znews.vn/tai-san-ty-phu-elon-musk-giam-khong-phanh-post1672953.html",
+                "source": "znews.vn",
+                "summary": "Khối tài sản của tỷ phú Elon Musk vừa bốc hơi hàng chục tỷ USD và chính thức rơi xuống dưới 700 tỷ USD sau khi cổ phiếu Tesla và SpaceX hứng chịu những đợt",
+                "score": 0.054666292
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multi_confirm_send",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "hard"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Viết email báo cáo công việc"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có muốn gửi nội dung này không?"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, gửi đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-3.5-flash\\nPlease retry in 17.951969797s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '17s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G09_multi_missing_info",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "medium"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 5 tweet gần nhất đi"
+        },
+        {
+          "role": "assistant",
+          "content": "Của ai cơ?"
+        },
+        {
+          "role": "user",
+          "content": "Của Bill Gates"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-3.5-flash\\nPlease retry in 17.729915224s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '17s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G10_multi_url_summary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "easy"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Link này nói về cái gì: https://google.com"
+        },
+        {
+          "role": "assistant",
+          "content": "Đây là trang chủ Google"
+        },
+        {
+          "role": "user",
+          "content": "Thế còn https://apple.com thì sao?"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://apple.com"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-3.5-flash\\nPlease retry in 17.513741806s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '17s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    }
+  ]
+}
