@@ -78,23 +78,22 @@
       }
     },
     {
-      "id": "G05_timeline_limit_extract",
+      "id": "G05_weather_lookup",
       "phase": "B",
-      "query": "Cho mình xem 15 tweet gần nhất của @OpenAI",
-      "failure_type": "wrong_arg_value",
+      "query": "Thời tiết hôm nay ở Hà Nội thế nào?",
+      "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
           {
-            "name": "timeline",
+            "name": "weather",
             "args": {
-              "screenname": "OpenAI",
-              "limit": 15
+              "city": "Hanoi"
             }
           }
         ]
       },
       "metadata": {
-        "what_it_tests": "Trích đúng limit=15 từ '15 tweet', screenname='OpenAI' từ '@OpenAI' (không có @)."
+        "what_it_tests": "Hỏi thời tiết cụ thể ở Hà Nội → gọi tool mới weather với city='Hanoi', không gọi lookup."
       }
     },
     {

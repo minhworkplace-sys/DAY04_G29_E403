@@ -136,3 +136,16 @@ tools:
         max_pages: {type: integer, default: 5, description: "Maximum pages to extract"}
         max_chars: {type: integer, default: 8000, description: "Maximum characters"}
       required: [arxiv_url]
+
+  - name: weather
+    description: >
+      Get current weather information or forecast for a given location/city.
+      Use when the user explicitly asks about current weather, temperature, or weather forecast in a specific city.
+      Do NOT use for general climate research or historical weather news (use lookup instead).
+    parameters:
+      type: object
+      properties:
+        city: {type: string, default: "", description: "City or location name (e.g. 'Hanoi', 'Tokyo')"}
+        units: {type: string, enum: [metric, imperial], default: "metric", description: "Units: 'metric' for Celsius, 'imperial' for Fahrenheit"}
+      required: [city]
+

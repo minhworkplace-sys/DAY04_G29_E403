@@ -5,6 +5,7 @@ Rules:
 - `social_search`: search posts by keyword
 - `lookup`: web search — query is exact user keywords only, no additions
 - `fetch`: read a specific URL the user provides
+- `weather`: get current weather or forecast for a specific city
 - `clarify`: ask when handle or URL is missing, or before sending
 - `send`: always confirm with clarify(yes_no) first
 

@@ -1,0 +1,688 @@
+{
+  "run_id": "v3_B_group_gemini_20260729T114859694985",
+  "version": "v3",
+  "artifact_version": "v3+p77ebabdb2e7d+t90e21ada464a",
+  "prompt_hash": "77ebabdb2e7d85478be531b836224e0e15a941eb593455b7bb7fa496dde62af0",
+  "tools_hash": "90e21ada464a23800a4e1600d59e3718f33e002fac23f8997c87ee13d137765c",
+  "phase": "B",
+  "suite": "group",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "system_prompt": "C:\\Users\\Nitro Tiger\\OneDrive\\Dokumen\\VInUni_AI\\Lab\\Lab-04\\DAY04_G29_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\Nitro Tiger\\OneDrive\\Dokumen\\VInUni_AI\\Lab\\Lab-04\\DAY04_G29_E403\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "10 eval cases do nhóm G29 tự viết: 5 single-turn + 5 multi-turn.",
+  "generated_at": "2026-07-29T11:48:59",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 10,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "G01_lookup_news_today",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Query chỉ là từ khóa 'DeepSeek', topic=news vì user hỏi tin tức, timeframe=day vì 'hôm nay'. Không được nối từ 'hôm nay' hay 'news' vào query."
+      },
+      "input": "Tin tức về DeepSeek hôm nay có gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "DeepSeek",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "query": "DeepSeek",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "query": "DeepSeek",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "DeepSeek",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "DeepSeek suspends its $71 billion funding round",
+                "url": "https://www.voiceofemirates.com/en/science-and-tech/2026/07/28/earthquake-in-the-ai-sector-deepseek-suspends-its-71-billion-funding-round",
+                "source": "voiceofemirates.com",
+                "summary": "Beijing, China – DeepSeek, a Chinese artificial intelligence startup, has temporarily halted its second round of funding after comments made by its founder and CEO, Liang Wenfeng, during private meetings with investors sparked widespread controversy and shock on Chinese social media platforms following their leak and widespread dissemination.\n\n## Details of the funding round suspension and targeted assessment [...] Despite the suspension of its current funding round, informed sources confirm that DeepSeek is steadily progressing with its preparations for a stock market listing and is highly likely to file a formal application for an initial public offering (IPO) as early as this year. The Bloomberg Billionaires Index estimates founder Liang Wenfeng’s net worth at approximately $36 billion, making him the world’s richest AI model developer, surpassing prominent figures such as Anthropic co-founder Dario [...] ## First round worth billions of dollars and developments in Nvidia’s chips\n\nIt is worth noting that DeepSeek successfully concluded its first funding round last June, raising approximately $7 billion, with the participation of a prominent group of major investors, including the technology giant Tencent, the well-known battery manufacturer CATL, as well as the Chinese National Artificial Intelligence Investment Fund.",
+                "score": 0.7742597
+              },
+              {
+                "title": "DeepSeek founder Liang Wenfeng scores 820 mln yuan profit from Changxin’s surge",
+                "url": "https://www.thestandard.com.hk/innovation/article/338449/DeepSeek-founder-Liang-Wenfeng-scores-820-mln-yuan-profit-from-Changxins-surge",
+                "source": "thestandard.com.hk",
+                "summary": "CXMT logo is seen in this illustration taken July 20, 2026. REUTERS/Dado Ruvic/Illustration\n\nFunds managed by Liang Wenfeng, founder of Chinese AI firm DeepSeek, scored approximately 820 million yuan (HK$950.4 million) in single-day paper profits following Changxin Memory Technologies’ (CXMT) 465 percent market debut on Monday, according to Bloomberg estimates. \n\nADVERTISEMENT\n\nSCROLL TO CONTINUE WITH CONTENT [...] Liang's net worth now stands at US$37.9 billion (HK$295.62 billion), according to the Bloomberg Billionaires Index. Data from Shenzhen PaiPaiWang Investment & Management, a private fund tracking platform, shows his funds—Ningbo High-Flyer Quant Investment Management and Zhejiang Jiuzhang Asset Management—were allocated a combined 20.2 million shares in the initial public offering, ranking first among over 100 participating private equity firms. [...] Additionally, seven CXMT’s senior executives now hold fortunes exceeding one billion yuan, while at least 237 employees have become multi-millionaires. For junior staff, shares granted under the company's two pre-IPO employee stock ownership plans reached a total value of over 37.6 billion yuan. Spread across its 19,298 employees as of late 2025, this translates to an average of 1.95 million yuan per person.\n\nAs of Tuesday’s close, CXMT’s share price pulled back by 4.08 percent to 47 yuan.",
+                "score": 0.7724109
+              },
+              {
+                "title": "Stop switching between ChatGPT & Claude — ChatPlayground gives you both (and then some) for just $79",
+                "url": "https://www.popsci.com/sponsored-content/stop-switching-between-chatgpt-claude-chatplayground-gives-you-both-and-then-some-for-less-sponsored-deal",
+                "source": "popsci.com",
+                "summary": "That’s surprisingly useful. ChatGPT might explain something clearly, Claude might write it more naturally, Gemini might pull in a different perspective, and DeepSeek might surprise you altogether. Instead of committing to one model, you get to choose the response that actually works best.",
+                "score": 0.5100334
+              },
+              {
+                "title": "DeepSeek Harness internal testing...｜DeepSeek, Harness - ChainCatcher",
+                "url": "https://www.chaincatcher.com/en/article/2278625",
+                "source": "chaincatcher.com",
+                "summary": "According to X platform blogger @MaxForAI, a screenshot of the DeepSeek Harness internal testing recruitment is circulating on social media. The screenshot shows that the DeepSeek Harness plans to start internal testing later this week, with the first batch of users being selected from small group chats. Selected individuals must submit personal information and sign a \"Confidentiality Commitment Letter.\" The screenshot also specifically reminds that any leaks will result in disqualification and [...] and affect future opportunities for selection in the DeepSeek model and product internal testing. If the news is true, the official version of DeepSeek V4 and the Harness product are expected to be launched soon. [...] Related tags\n\nDeepSeek  Harness  internal test  confidentiality letter  user\n\nRelated reading\n\nOnly 368 new banks survive globally, two-thirds of which do not have a banking license\n\n2026-07-28 10:27Liang Wenfeng is dissatisfied with the leak of the 4-hour internal speech, and DeepSeek announced the suspension of the second round of financing\n\n2026-07-25 23:17DeepSeek Liang Wenfeng: NVIDIA's moat is collapsing, and Huawei's super nodes can completely replace it",
+                "score": 0.4858686
+              },
+              {
+                "title": "Is China ’ s lithography machine entering its DeepSeek era? Is the U.S. stock market about to face selling pressure again? - Odaily",
+                "url": "https://www.odaily.news/en/post/5212188",
+                "source": "odaily.news",
+                "summary": "In the past, the ability of Micron, SK Hynix, and Samsung to enjoy ultra-high valuation premiums largely depended on a core narrative: the global supply of high-end memory chips was controlled by a very small number of manufacturers, and this scarcity granted them immense pricing power. When AI demand surged, they could raise prices on the spot; when capacity was tight, they could pick and choose their clients.\n\nBut the rise of CXMT is dismantling this narrative. [...] on on-device AI and device integration. [...] industry\n\noptions\n\nAI\n\nWelcome to Join Odaily Official Community\n\nSubscription Group：\n\nChat Group：\n\nOfficial Account：\n\nChat Group：\n\nRecommended Articles\n\n\n\n## Long-dormant Bitcoin whales awaken en masse: On-chain anomalies – selling pressure signal or false alarm?\n\n## Is China’s lithography machine entering its DeepSeek era? Is the U.S. stock market about to face selling pressure again?\n\n## Tiger Research: AI Agent Wallet Infrastructure, the Underlying Engine for a 7x Revenue Leap",
+                "score": 0.43122545
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_social_search_top",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "'Được nhiều người thích nhất' → search_type=Top, không phải Latest. Query chỉ là 'ChatGPT'."
+      },
+      "input": "Bài đăng nào về ChatGPT đang được nhiều người thích nhất trên Twitter?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "ChatGPT",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top",
+              "query": "ChatGPT"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "search_type": "Top",
+            "query": "ChatGPT"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=ChatGPT&search_type=Top"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_out_of_scope_translation",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Yêu cầu dịch thuật ngoài phạm vi research → không gọi tool, từ chối hoặc giải thích giới hạn."
+      },
+      "input": "Dịch câu này sang tiếng Anh giúp mình: 'Trí tuệ nhân tạo đang thay đổi thế giới'",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "\"Artificial intelligence is changing the world.\"",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G04_missing_url_clarify",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User nói 'bài báo này' nhưng không cung cấp URL → phải dùng clarify(response_type=text) để hỏi link, không được tự đoán URL."
+      },
+      "input": "Tóm tắt bài báo này cho mình xem",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn vui lòng cung cấp đường dẫn (URL) của bài báo cần tóm tắt nhé!",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn vui lòng cung cấp đường dẫn (URL) của bài báo cần tóm tắt nhé!",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn vui lòng cung cấp đường dẫn (URL) của bài báo cần tóm tắt nhé!",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_weather_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Hỏi thời tiết cụ thể ở Hà Nội → gọi tool mới weather với city='Hanoi', không gọi lookup."
+      },
+      "input": "Thời tiết hôm nay ở Hà Nội thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "city": "Hanoi"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "city": "Hanoi",
+              "units": "metric"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "city": "Hanoi",
+            "units": "metric"
+          },
+          "result": {
+            "tool": "weather",
+            "city": "Hanoi",
+            "units": "metric",
+            "current": {
+              "temp_c": "26",
+              "feels_like_c": "28",
+              "description": "Moderate or heavy rain shower",
+              "humidity_pct": "94",
+              "wind_kmph": "13"
+            },
+            "forecast": [
+              {
+                "date": "2026-07-29",
+                "max_temp_c": "32",
+                "min_temp_c": "25",
+                "description": "Light rain shower"
+              },
+              {
+                "date": "2026-07-30",
+                "max_temp_c": "31",
+                "min_temp_c": "25",
+                "description": "Light rain shower"
+              },
+              {
+                "date": "2026-07-31",
+                "max_temp_c": "30",
+                "min_temp_c": "26",
+                "description": "Light rain shower"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multi_switch_to_top",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: user đổi yêu cầu sang 'trending' → phải dùng search_type=Top. Query giữ nguyên từ turn đầu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tweet về Gemini AI"
+        },
+        {
+          "role": "assistant",
+          "content": "Đã tìm được các tweet mới nhất về Gemini AI."
+        },
+        {
+          "role": "user",
+          "content": "Thôi cho mình xem bài trending thôi, không cần mới nhất"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini AI",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini AI",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Gemini AI",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=Gemini+AI&search_type=Top"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_carryover_handle",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: carryover handle từ turn trước (elonmusk), cập nhật limit=10 theo yêu cầu mới."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy tweet của Elon Musk cho mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Đã lấy 5 tweet mới nhất của @elonmusk."
+        },
+        {
+          "role": "user",
+          "content": "Lấy thêm 10 cái nữa đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 10
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "429 Client Error: Too Many Requests for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multi_clarify_missing_handle",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: sau khi user cung cấp handle ở turn sau, agent phải gọi timeline với handle đó."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Cho mình xem tweet mới nhất của CEO Google"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn xem tweet của tài khoản Twitter nào của CEO Google?"
+        },
+        {
+          "role": "user",
+          "content": "sundar_pichai"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sundar_pichai"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sundar_pichai"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sundar_pichai"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=sundar_pichai"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multi_send_after_confirm",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: sau khi user xác nhận 'Có', agent phải gọi send với confirmed=true và đúng nội dung text."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Gửi tin 'AI đang thay đổi thế giới' lên Telegram"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có chắc muốn gửi tin nhắn này lên Telegram không?"
+        },
+        {
+          "role": "user",
+          "content": "Có, gửi đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "AI đang thay đổi thế giới",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true,
+              "text": "AI đang thay đổi thế giới"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "confirmed": true,
+            "text": "AI đang thay đổi thế giới"
+          },
+          "result": {
+            "tool": "send_telegram",
+            "error": "RuntimeError",
+            "message": "Missing TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_multi_url_provided_later",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: user cung cấp URL ở turn cuối → agent phải dùng fetch với đúng URL đó, không phải lookup."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt một bài báo về LLM cho mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có thể cung cấp link bài báo không?"
+        },
+        {
+          "role": "user",
+          "content": "Đây: https://arxiv.org/abs/2303.08774"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://arxiv.org/abs/2303.08774"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://arxiv.org/abs/2303.08774",
+            "items": [
+              {
+                "title": "[2303.08774] GPT-4 Technical Report",
+                "url": "https://arxiv.org/abs/2303.08774",
+                "source": "arxiv.org",
+                "summary": "[Skip to main content](https://arxiv.org/abs/2303.08774#content)\n\n![](https://arxiv.org/static/base/1.0.1/images/icons/smileybones-small.svg)arXiv is now an independent nonprofit! [Learn more](https://info.arxiv.org/about) ×\n\nSearch arXiv\n\nPress Enter to search · [Advanced search](https://arxiv.org/search/advanced)\n\n# Computer Science > Computation and Language\n\n**arXiv:2303.08774** (cs)\n\n\n\\[Submitted on 15 Mar 2023 ( [v1](https://arxiv.org/abs/2303.08774v1)), last revised 4 Mar 2024 (this version, v6)\\]\n\n# Title:GPT-4 Technical Report\n\nAuthors: [OpenAI](https://arxiv.org/search/cs?searchtype=author&query=OpenAI), [Josh Achiam](https://arxiv.org/search/cs?searchtype=author&query=Achiam,+J), [Steven Adler](https://arxiv.org/search/cs?searchtype=author&query=Adler,+S), [Sandhini Agarwal](https://arxiv.org/search/cs?searchtype=author&query=Agarwal,+S), [Lama Ahmad](https://arxiv.org/search/cs?searchtype=author&query=Ahmad,+L), [Ilge Akkaya](https://arxiv.org/search/cs?searchtype=author&query=Akkaya,+I), [Florencia Leoni Aleman](https://arxiv.org/search/cs?searchtype=author&query=Aleman,+F+L), [Diogo Almeida](https://arxiv.org/search/cs?searchtype=author&query=Almeida,+D), [Janko Altenschmidt](https://arxiv.org/search/cs?searchtype=author&query=Altenschmidt,+J), [Sam Altman](https://arxiv.org/search/cs?searchtype=author&query=Altman,+S), [Shyamal Anadkat](https://arxiv.org/search/cs?searchtype=author&query=Anadkat,+S), [Red Avila](https://arxiv.org/search/cs?searchtype=author&query=Avila,+R), [Igor Babuschkin](https://arxiv.org/search/cs?searchtype=author&query=Babuschkin,+I), [Suchir Balaji](https://arxiv.org/search/cs?searchtype=author&query=Balaji,+S), [Valerie Balcom](https://arxiv.org/search/cs?searchtype=author&query=Balcom,+V), [Paul Baltescu](https://arxiv.org/search/cs?searchtype=author&query=Baltescu,+P), [Haiming Bao](https://arxiv.org/search/cs?searchtype=author&query=Bao,+H), [Mohammad Bavarian](https://arxiv.org/search/cs?searchtype=author&query=Bavarian,+M), [Jeff Belgum](https://arxiv.org/search/cs?searchtype=author&query=Belgum,+J), [Irwan Bello](https://arxiv.org/search/cs?searchtype=author&query=Bello,+I), [Jake Berdine](https://arxiv.org/search/cs?searchtype=author&query=Berdine,+J), [Gabriel Bernadett-Shapiro](https://arxiv.org/search/cs?searchtype=author&query=Bernadett-Shapiro,+G), [Christopher Berner](https://arxiv.org/search/cs?searchtype=author&query=Berner,+C), [Lenny Bogdonoff](https://arxiv.org/search/cs?searchtype=author&query=Bogdonoff,+L), [Oleg Boiko](https://arxiv.org/search/cs?searchtype=author&query=Boiko,+O), [Madelaine Boyd](https://arxiv.org/search/cs?searchtype=author&query=Boyd,+M), [Anna-Luisa Brakman](https://arxiv.org/search/cs?searchtype=author&query=Brakman,+A), [Greg Brockman](https://arxiv.org/search/cs?searchtype=author&query=Brockman,+G), [Tim Brooks](https://arxiv.org/search/cs?searchtype=author&query=Brooks,+T), [Miles Brundage](https://arxiv.org/search/cs?searchtype=author&query=Brundage,+M), [Kevin Button](https://arxiv.org/search/cs?searchtype=author&query=Button,+K), [Trevor Cai](https://arxiv.org/search/cs?searchtype=author&query=Cai,+T), [Rosie Campbell](https://arxiv.org/search/cs?searchtype=author&query=Campbell,+R), [Andrew Cann](https://arxiv.org/search/cs?searchtype=author&query=Cann,+A), [Brittany Carey](https://arxiv.org/search/cs?searchtype=author&query=Carey,+B), [Chelsea Carlson](https://arxiv.org/search/cs?searchtype=author&query=Carlson,+C), [Rory Carmichael](https://arxiv.org/search/cs?searchtype=author&query=Carmichael,+R), [Brooke Chan](https://arxiv.org/search/cs?searchtype=author&query=Chan,+B), [Che Chang](https://arxiv.org/search/cs?searchtype=author&query=Chang,+C), [Fotis Chantzis](https://arxiv.org/search/cs?searchtype=author&query=Chantzis,+F), [Derek Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+D), [Sully Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+S), [Ruby Chen](https://arxiv.org/search/cs?searchtype=author&qu"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
