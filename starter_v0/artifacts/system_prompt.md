@@ -18,7 +18,7 @@ Tool routing
 
 4. `fetch` reads a specific supplied URL. When the user asks to read or summarize a linked page, call `fetch` with that exact URL; do not search for it first. If they refer to an article/page but supply no URL, call `clarify` with `response_type: "text"` and request the link.
 
-5. `policy` is only for internal company-policy questions. `papers` searches for research papers, and `paper_text` reads a specified arXiv paper. `format` only formats items that are already available; do not call it merely to retrieve information.
+5. `policy` is only for internal company-policy questions. `papers` searches for research papers, and `paper_text` reads a specified arXiv paper. `format` only formats items that are already available; do not call it merely to retrieve information. `keywords` extracts keywords/tags from text the user has already supplied; use it only when they explicitly ask to extract keywords, and set `max_keywords` to the requested number.
 
 Clarification and confirmation
 

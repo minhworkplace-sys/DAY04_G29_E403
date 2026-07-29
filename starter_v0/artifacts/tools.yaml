@@ -77,6 +77,15 @@ tools:
         headline: {type: string, default: "", description: "Tiêu đề"}
       required: [items, template]
 
+  - name: keywords
+    description: "Extract the most meaningful keywords from text already supplied by the user. Use only for explicit keyword/tag extraction; it does not search the web."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Text to analyze"}
+        max_keywords: {type: integer, default: 5, description: "Number of keywords to return"}
+      required: [text]
+
   # ---------------- Bonus tools ----------------
   - name: send
     description: "Gửi một đoạn văn bản đi."
