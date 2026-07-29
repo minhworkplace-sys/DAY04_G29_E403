@@ -1,3 +1,5 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
 v0,G29,system_prompt.md,v0+peb1c8179815b+t6cdb53d5d7b8,eb1c8179815b,6cdb53d5d7b8,baseline — chưa tối ưu,Đo hành vi gốc trước khi cải thiện,case_accuracy,,0.60,runs/v0_B_base_gemini_20260729T104100809207.json
 v1,G29,system_prompt.md,v1+pfebd103af43b+t6cdb53d5d7b8,pfebd103af43b,6cdb53d5d7b8,Rút ngắn và làm rõ prompt + thêm boundary/clarify rules,Prompt rõ ràng hơn giúp routing và out-of-scope đúng hơn,case_accuracy,0.60,0.65,runs/v1_B_base_gemini_20260729T111329211977.json
+v2,G29,tools.yaml,v2+pfebd103af43b+t614a9bbfc85b,pfebd103af43b,614a9bbfc85b,Cải thiện tool descriptions (clarify/lookup/send/fetch),Mô tả rõ khi nào dùng clarify và format query đúng giúp accuracy tăng mạnh,case_accuracy,0.65,0.85,runs/v2_B_base_gemini_20260729T112037978575.json
+v3,G29,system_prompt.md,v3+p064bfc241f20+t614a9bbfc85b,p064bfc241f20,614a9bbfc85b,Thêm STRICT clarify rules + response_type guide,Hướng dẫn rõ response_type text vs yes_no để fix R10 R11 R12,case_accuracy,0.85,0.90,runs/v3_B_base_gemini_20260729T112739962418.json
