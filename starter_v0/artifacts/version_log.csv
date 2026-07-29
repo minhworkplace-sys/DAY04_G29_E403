@@ -1,1 +1,3 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
+v0,G29,system_prompt.md,v0+peb1c8179815b+t6cdb53d5d7b8,eb1c8179815b,6cdb53d5d7b8,baseline — chưa tối ưu,Đo hành vi gốc trước khi cải thiện,case_accuracy,,0.60,runs/v0_B_base_gemini_20260729T104100809207.json
+v1,G29,system_prompt.md,v1+pfebd103af43b+t6cdb53d5d7b8,pfebd103af43b,6cdb53d5d7b8,Rút ngắn và làm rõ prompt + thêm boundary/clarify rules,Prompt rõ ràng hơn giúp routing và out-of-scope đúng hơn,case_accuracy,0.60,0.65,runs/v1_B_base_gemini_20260729T111329211977.json

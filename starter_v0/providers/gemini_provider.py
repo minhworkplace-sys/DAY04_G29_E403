@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -69,14 +70,23 @@ def _function_call_args(call: Any) -> dict[str, Any]:
 class GeminiProvider:
     """Google Gemini API provider with normalized tool_calls output."""
 
+    # Valid Gemini models (as of 2025-2026):
+    # gemini-2.0-flash, gemini-2.0-flash-lite
+    # gemini-1.5-flash, gemini-1.5-flash-8b, gemini-1.5-pro
+    # gemini-2.5-flash, gemini-2.5-pro
+
     def __init__(
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.5-flash",
+        default_model: str = "gemini-3.1-flash-lite",
+        max_retries: int = 5,
+        retry_base_delay: float = 20.0,
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
+        self.max_retries = max_retries
+        self.retry_base_delay = retry_base_delay
 
     def complete(
         self,
@@ -106,11 +116,28 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
-            model=model or self.default_model,
-            contents=contents,
-            config=types.GenerateContentConfig(**config_kwargs),
-        )
+        _model = model or self.default_model
+        last_exc: Exception | None = None
+
+        for attempt in range(self.max_retries):
+            try:
+                resp = client.models.generate_content(
+                    model=_model,
+                    contents=contents,
+                    config=types.GenerateContentConfig(**config_kwargs),
+                )
+                break
+            except Exception as exc:
+                err_str = str(exc)
+                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                    wait = self.retry_base_delay * (attempt + 1)
+                    print(f"  [gemini] Rate limited (429), waiting {wait:.0f}s (attempt {attempt + 1}/{self.max_retries})...")
+                    time.sleep(wait)
+                    last_exc = exc
+                else:
+                    raise
+        else:
+            raise RuntimeError(f"Gemini rate limit: exceeded {self.max_retries} retries") from last_exc
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []
