@@ -5,6 +5,8 @@ Vũ Minh Quang - 2A202601515
 Lương Ngọc Quang - 2A202601563
 Nguyễn Quốc Thịnh	- 2A202601675
 
+# Lab 04 completed
+
 # Day 04 Lab v2 — Research Agent Tool Eval
 
 ## Brief
@@ -141,7 +143,7 @@ test -f .env || cp .env.example .env
 Mở `.env`, điền ít nhất key của model provider rồi lưu file. Sau đó mới chạy:
 
 ```bash
-python scripts/preflight_provider.py --provider openrouter
+python scripts/preflight_provider.py --provider gemini
 ```
 
 Không ghi đè `.env` đã có. Nếu dùng provider khác, thay `openrouter` trong mọi command; xem lệnh Windows và quicktest chi tiết trong [TOOL-SETUP.md](TOOL-SETUP.md).
@@ -153,7 +155,7 @@ Run the fixed base eval as `v0`:
 Lưu ý: eval thực thi tool thật. Case Telegram trong base chỉ chấm `clarify(response_type="yes_no")`; để Telegram credentials unset trong mọi `run_eval`.
 
 ```bash
-python run_eval.py --provider openrouter --version v0 --suite base --eval-cases data/eval_base.json
+python run_eval.py --provider gemini --version v0 --suite base --eval-cases data/eval_base.json
 ```
 
 Đọc các trường chính trong run JSON:
@@ -204,9 +206,9 @@ Method, not memorized answers:
 Không chạy cả ba lệnh liên tiếp. Trước mỗi version, sửa một hypothesis rồi mới chạy đúng một lệnh:
 
 ```bash
-python run_eval.py --provider openrouter --version v1 --suite base --eval-cases data/eval_base.json
-python run_eval.py --provider openrouter --version v2 --suite base --eval-cases data/eval_base.json
-python run_eval.py --provider openrouter --version v3 --suite base --eval-cases data/eval_base.json
+python run_eval.py --provider gemini --version v1 --suite base --eval-cases data/eval_base.json
+python run_eval.py --provider gemini --version v2 --suite base --eval-cases data/eval_base.json
+python run_eval.py --provider gemini --version v3 --suite base --eval-cases data/eval_base.json
 ```
 
 Sau mỗi run, fill `artifacts/version_log.csv`:
@@ -238,13 +240,13 @@ Cả template trong `starter_v0/` và `solution/` đều trống; điều đó k
 Run:
 
 ```bash
-python run_eval.py --provider openrouter --version v3 --suite group --eval-cases data/eval_group.json
+python run_eval.py --provider gemini --version v3 --suite group --eval-cases data/eval_group.json
 ```
 
 Optional extension eval — không phải điều kiện hoàn thành core; chỉ chạy khi team chọn dùng các capability built-in này:
 
 ```bash
-python run_eval.py --provider openrouter --version v3 --suite extension --eval-cases data/eval_research_extension.json
+python run_eval.py --provider gemini --version v3 --suite extension --eval-cases data/eval_research_extension.json
 ```
 
 Nếu đã bỏ optional declarations để isolate core, bật lại chúng trước khi chạy extension.

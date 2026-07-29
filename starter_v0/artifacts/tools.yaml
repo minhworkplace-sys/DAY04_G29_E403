@@ -77,6 +77,15 @@ tools:
         headline: {type: string, default: "", description: "Tiêu đề"}
       required: [items, template]
 
+  # ---------------- Custom Tools ----------------
+  - name: stock_price
+    description: "Lấy giá cổ phiếu hiện tại của một công ty dựa trên mã chứng khoán (ticker). Chỉ dùng khi người dùng cụ thể hỏi về giá cổ phiếu."
+    parameters:
+      type: object
+      properties:
+        ticker: {type: string, default: "", description: "Mã chứng khoán của công ty (ví dụ: 'AAPL', 'GOOGL', 'TSLA')."}
+      required: [ticker]
+
   # ---------------- Bonus tools ----------------
   - name: send
     description: "Gửi một đoạn văn bản đi."
