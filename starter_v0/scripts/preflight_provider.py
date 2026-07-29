@@ -10,7 +10,7 @@ ARTIFACTS_DIR = ROOT / "artifacts"
 
 from env_loader import load_lab_env
 from providers import make_provider
-from tools import load_tool_declarations, to_openai_tools
+from tools import load_tool_declarations, to_model_tools
 
 
 load_lab_env(ROOT)
@@ -24,7 +24,7 @@ def main() -> None:
     args = parser.parse_args()
 
     provider = make_provider(args.provider)
-    tools = to_openai_tools(load_tool_declarations(args.tools))
+    tools = to_model_tools(load_tool_declarations(args.tools))
     messages = [
         {"role": "system", "content": "You are a tool-routing smoke test. Use tools when appropriate."},
         {"role": "user", "content": "Tweet mới nhất của Sam Altman là gì?"},

@@ -10,7 +10,7 @@ from typing import Any
 from env_loader import load_lab_env
 from providers import make_provider
 from providers.base import ToolCall
-from tools import TOOL_FUNCTIONS, load_tool_declarations, to_openai_tools
+from tools import TOOL_FUNCTIONS, load_tool_declarations, to_model_tools
 from versioning import artifact_version_dict, build_artifact_version
 
 
@@ -163,7 +163,7 @@ def main() -> None:
 
     system_prompt = args.system_prompt.read_text(encoding="utf-8")
     tool_declarations = load_tool_declarations(args.tools)
-    openai_tools = to_openai_tools(tool_declarations)
+    model_tools = to_model_tools(tool_declarations)
     provider = make_provider(args.provider)
     selected_model = args.model or getattr(provider, "default_model", None)
     artifact_version = build_artifact_version(args.version, args.system_prompt, args.tools)
@@ -227,7 +227,7 @@ def main() -> None:
             result = run_model_tool_loop(
                 provider=provider,
                 messages=messages,
-                tools=openai_tools,
+                tools=model_tools,
                 model=args.model,
                 max_tool_rounds=args.max_tool_rounds,
             )

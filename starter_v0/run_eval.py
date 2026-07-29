@@ -10,7 +10,7 @@ from typing import Any
 from agent import ResearchAgent
 from env_loader import load_lab_env
 from providers import make_provider
-from tools import TOOL_FUNCTIONS, load_tool_declarations, to_openai_tools
+from tools import TOOL_FUNCTIONS, load_tool_declarations, to_model_tools
 from versioning import artifact_version_dict, build_artifact_version
 
 
@@ -283,12 +283,12 @@ def main() -> None:
 
     tool_declarations = load_tool_declarations(args.tools)
     validate_expected_tools(cases, tool_declarations, args.eval_cases)
-    openai_tools = to_openai_tools(tool_declarations)
+    model_tools = to_model_tools(tool_declarations)
 
     results: list[dict[str, Any]] = []
     for case in cases:
         print(f"Running {case['id']}...", flush=True)
-        agent = ResearchAgent(provider, system_prompt=system_prompt, tools=openai_tools, model=args.model)
+        agent = ResearchAgent(provider, system_prompt=system_prompt, tools=model_tools, model=args.model)
         try:
             tool_choice = None if case["expect"].get("no_tool") else "required"
             run = agent.run(case_messages(case), tool_choice=tool_choice)

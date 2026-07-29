@@ -5,6 +5,15 @@ from pathlib import Path
 
 
 def load_dotenv(path: Path, *, override: bool = True) -> None:
+    try:
+        from dotenv import load_dotenv as dotenv_load_dotenv
+    except ImportError:
+        dotenv_load_dotenv = None
+
+    if dotenv_load_dotenv is not None:
+        dotenv_load_dotenv(path, override=override)
+        return
+
     if not path.exists():
         return
     for raw_line in path.read_text(encoding="utf-8").splitlines():

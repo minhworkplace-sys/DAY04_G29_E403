@@ -19,18 +19,35 @@ def _to_gemini_declarations(tools: list[dict[str, Any]] | None) -> list[dict[str
     return declarations
 
 
-def _to_gemini_contents(messages: list[dict[str, str]]) -> tuple[str | None, list[dict[str, Any]]]:
+def _make_gemini_object(types: Any, class_name: str, **kwargs: Any) -> Any:
+    factory = getattr(types, class_name, None)
+    if factory is None:
+        return kwargs
+    return factory(**kwargs)
+
+
+def _to_gemini_contents(messages: list[dict[str, str]], types: Any) -> tuple[str | None, list[Any]]:
     system_parts: list[str] = []
-    contents: list[dict[str, Any]] = []
+    contents: list[Any] = []
     for msg in messages:
         role = msg.get("role")
         content = msg.get("content", "")
         if role == "system":
             system_parts.append(content)
         elif role == "assistant":
-            contents.append({"role": "model", "parts": [{"text": content}]})
+            contents.append(_make_gemini_object(
+                types,
+                "Content",
+                role="model",
+                parts=[_make_gemini_object(types, "Part", text=content)],
+            ))
         elif role == "user":
-            contents.append({"role": "user", "parts": [{"text": content}]})
+            contents.append(_make_gemini_object(
+                types,
+                "Content",
+                role="user",
+                parts=[_make_gemini_object(types, "Part", text=content)],
+            ))
     return ("\n\n".join(system_parts) if system_parts else None), contents
 
 
@@ -66,6 +83,23 @@ def _function_call_args(call: Any) -> dict[str, Any]:
     return {}
 
 
+def _build_tool_config(types: Any, declarations: list[dict[str, Any]], tool_choice: Any | None) -> Any | None:
+    if not declarations or tool_choice is None:
+        return None
+
+    function_calling_config = _make_gemini_object(
+        types,
+        "FunctionCallingConfig",
+        mode="ANY",
+        allowed_function_names=[item["name"] for item in declarations],
+    )
+    return _make_gemini_object(
+        types,
+        "ToolConfig",
+        function_calling_config=function_calling_config,
+    )
+
+
 class GeminiProvider:
     """Google Gemini API provider with normalized tool_calls output."""
 
@@ -73,7 +107,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.5-flash",
+        default_model: str = "gemini-3.6-flash",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
@@ -97,13 +131,28 @@ class GeminiProvider:
         if not api_key:
             raise RuntimeError(f"Missing API key env var: {self.api_key_env}")
 
-        system_instruction, contents = _to_gemini_contents(messages)
+        system_instruction, contents = _to_gemini_contents(messages, types)
         declarations = _to_gemini_declarations(tools)
         config_kwargs: dict[str, Any] = {"temperature": temperature}
         if system_instruction:
             config_kwargs["system_instruction"] = system_instruction
         if declarations:
-            config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
+            function_declarations = [
+                _make_gemini_object(
+                    types,
+                    "FunctionDeclaration",
+                    name=item["name"],
+                    description=item.get("description", ""),
+                    parameters=item.get("parameters", {"type": "object", "properties": {}}),
+                )
+                for item in declarations
+            ]
+            config_kwargs["tools"] = [
+                _make_gemini_object(types, "Tool", function_declarations=function_declarations),
+            ]
+        tool_config = _build_tool_config(types, declarations, tool_choice)
+        if tool_config is not None:
+            config_kwargs["tool_config"] = tool_config
 
         client = genai.Client(api_key=api_key)
         resp = client.models.generate_content(
@@ -133,6 +182,11 @@ class GeminiProvider:
         # Some SDK versions expose function calls directly on the response.
         for function_call in getattr(resp, "function_calls", []) or []:
             append_call(function_call)
+
+        if not text_parts:
+            response_text = getattr(resp, "text", None)
+            if response_text:
+                text_parts.append(response_text)
 
         deduped_calls: list[ToolCall] = []
         seen: set[tuple[str, str]] = set()

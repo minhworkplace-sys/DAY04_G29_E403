@@ -42,7 +42,7 @@ def load_tool_declarations(path: Path) -> list[dict[str, Any]]:
     return yaml.safe_load(Path(path).read_text(encoding="utf-8"))["tools"]
 
 
-def to_openai_tools(declarations: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def to_model_tools(declarations: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [{
         "type": "function",
         "function": {
@@ -51,4 +51,8 @@ def to_openai_tools(declarations: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "parameters": item.get("parameters", {"type": "object", "properties": {}}),
         },
     } for item in declarations]
+
+
+def to_openai_tools(declarations: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return to_model_tools(declarations)
 
