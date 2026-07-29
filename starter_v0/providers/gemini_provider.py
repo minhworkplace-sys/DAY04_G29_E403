@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -107,7 +109,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.6-flash",
+        default_model: str = "gemini-3.5-flash-lite",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
@@ -134,6 +136,8 @@ class GeminiProvider:
         system_instruction, contents = _to_gemini_contents(messages, types)
         declarations = _to_gemini_declarations(tools)
         config_kwargs: dict[str, Any] = {"temperature": temperature}
+        if temperature in (0, 0.0):
+            config_kwargs.pop("temperature", None)
         if system_instruction:
             config_kwargs["system_instruction"] = system_instruction
         if declarations:
@@ -155,11 +159,26 @@ class GeminiProvider:
             config_kwargs["tool_config"] = tool_config
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
-            model=model or self.default_model,
-            contents=contents,
-            config=types.GenerateContentConfig(**config_kwargs),
-        )
+        last_exc: Exception | None = None
+        for attempt in range(1, 6):
+            try:
+                resp = client.models.generate_content(
+                    model=model or self.default_model,
+                    contents=contents,
+                    config=types.GenerateContentConfig(**config_kwargs),
+                )
+                break
+            except Exception as exc:
+                last_exc = exc
+                message = str(exc)
+                is_quota_error = "429" in message and "RESOURCE_EXHAUSTED" in message
+                if not is_quota_error or attempt == 5:
+                    raise
+                retry_match = re.search(r"retry in ([0-9.]+)s", message)
+                retry_delay = float(retry_match.group(1)) + 1.0 if retry_match else 15.0
+                time.sleep(retry_delay)
+        else:
+            raise last_exc or RuntimeError("Gemini request failed without an exception")
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []

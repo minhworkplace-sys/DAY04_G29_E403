@@ -11,7 +11,7 @@ class OpenAIProvider(GeminiProvider):
         *,
         api_key_env: str = "GEMINI_API_KEY",
         base_url: str | None = None,
-        default_model: str = "gemini-3.6-flash",
+        default_model: str = "gemini-3.5-flash-lite",
     ) -> None:
         # `base_url` is retained for backward compatibility with older callers.
         super().__init__(api_key_env=api_key_env, default_model=default_model)

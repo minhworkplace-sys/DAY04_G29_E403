@@ -4,6 +4,7 @@ google-genai>=0.8.0
 python-dotenv>=1.0.1
 tiktoken>=0.7.0
 pytest>=8.0.0
+streamlit>=1.30.0
 # Research tools:
 requests>=2.31.0
 PyYAML>=6.0
