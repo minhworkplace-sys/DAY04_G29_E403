@@ -1,5 +1,5 @@
 ---
-name: papers
+name: bonus exam
 track: bonus
 kind: live_api
 provider: arXiv API
