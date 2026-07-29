@@ -1,2 +1,3 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
-v1,Nguyen Hoang Minh,artifacts/system_prompt.md,prompt_eval+p6aee777c8d06+t6cdb53d5d7b8,p6aee777c8d06,6cdb53d5d7b8,"Replaced unsafe guessing and single-tool instructions with explicit routing, argument, clarification, confirmation, and multi-turn rules.","Explicit tool-selection rules and known handle/timeframe mappings will improve base-eval routing and argument accuracy while preventing unnecessary or unsafe calls.",provider_error_cases,N/A,20,runs/v1_B_base_gemini_20260729T115753114324.json
+v1,Tên_nhóm,system_prompt.md,,,,,Sửa prompt để chặn đoán bừa và cấm làm toán,tool_routing_accuracy,0.8571,0.7857,tên_file_json_v1_của_bạn
+v2,Tên_nhóm,tools.yaml,,,,,Làm rõ mô tả timeline và social_search tránh nhầm lẫn,tool_routing_accuracy,0.7857,0.8889,tên_file_json_v2_mới_nhất_của_bạn

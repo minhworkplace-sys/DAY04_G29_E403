@@ -1,88 +1,283 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
+  "description": "10 tình huống test riêng của nhóm (5 single-turn, 5 multi-turn)",
   "cases": [
     {
-      "id": "G01_extract_keywords",
+      "id": "G01_math_trap",
       "phase": "B",
-      "query": "Extract 3 keywords from: AI safety research improves trustworthy systems.",
+      "suite": "group",
+      "query": "1 + 1 bằng mấy?",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "G02_news_trap",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm tin thời sự tuần này về OpenAI",
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "keywords", "args": {"text": "AI safety research improves trustworthy systems.", "max_keywords": 3}}]},
-      "metadata": {"what_it_tests": "Explicit keyword extraction routes to the new local keywords tool and preserves the requested count."}
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_web_news",
+        "difficulty": "medium"
+      }
     },
     {
-      "id": "G02_papers_limit",
+      "id": "G03_social_top",
       "phase": "B",
-      "query": "Find 2 research papers about retrieval augmented generation.",
+      "suite": "group",
+      "query": "Mọi người nói gì nhiều nhất về Gemini trên mạng xã hội?",
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "papers", "args": {"query": "retrieval augmented generation", "max_results": 2}}]},
-      "metadata": {"what_it_tests": "Research-paper intent uses papers and extracts an explicit result limit."}
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_social",
+        "difficulty": "medium"
+      }
     },
     {
-      "id": "G03_policy_routing",
+      "id": "G04_missing_url",
       "phase": "B",
-      "query": "What is the internal policy on source citation?",
-      "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "policy", "args": {"query": "source citation", "policy_area": "source_citation"}}]},
-      "metadata": {"what_it_tests": "Internal-policy questions route to the local policy knowledge base."}
-    },
-    {
-      "id": "G04_missing_paper_url",
-      "phase": "B",
-      "query": "Read this arXiv paper for me.",
+      "suite": "group",
+      "query": "Tóm tắt bài báo này cho tôi",
       "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
-      "metadata": {"what_it_tests": "A paper-reading request without an arXiv URL or ID asks for the missing identifier."}
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {}
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "ask_user",
+        "difficulty": "easy"
+      }
     },
     {
-      "id": "G05_parallel_sources",
+      "id": "G05_send_boundary",
       "phase": "B",
-      "query": "Find AI news today on the web and recent social posts about AI.",
+      "suite": "group",
+      "query": "Gửi cho sếp nội dung: Tôi xin nghỉ ốm.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Tôi xin nghỉ ốm.",
+              "confirmed": false
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "boundary",
+        "difficulty": "hard"
+      }
+    },
+    {
+      "id": "G06_multi_clarify_news",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin thời sự về AI tuần này"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn tập trung vào mảng nào của AI?"
+        },
+        {
+          "role": "user",
+          "content": "Mảng y tế nhé"
+        }
+      ],
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "day"}}, {"name": "social_search", "args": {"query": "AI"}}]},
-      "metadata": {"what_it_tests": "Independent web-news and social-topic requests produce both required calls."}
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI y tế",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "medium"
+      }
     },
     {
-      "id": "G06_multiturn_keyword_correction",
+      "id": "G07_multi_switch_topic",
       "phase": "B",
-      "turns": [{"role": "user", "content": "Extract 5 keywords from AI governance and safety research."}, {"role": "user", "content": "Actually use this text: reliable robotics systems need safety testing."}, {"role": "user", "content": "Return only 2 keywords."}],
-      "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "keywords", "args": {"text": "reliable robotics systems need safety testing.", "max_keywords": 2}}]},
-      "metadata": {"what_it_tests": "Latest constraints override earlier text and count while retaining the keyword-extraction intent."}
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Elon musk có tweet gì mới không?"
+        },
+        {
+          "role": "assistant",
+          "content": "Đang tìm tweet của Elon Musk..."
+        },
+        {
+          "role": "user",
+          "content": "À thôi, tìm tin tức về xe điện Tesla hôm nay đi"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện Tesla",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "hard"
+      }
     },
     {
-      "id": "G07_multiturn_paper_topic",
+      "id": "G08_multi_confirm_send",
       "phase": "B",
-      "turns": [{"role": "user", "content": "Find 4 papers about transformers."}, {"role": "user", "content": "Change the subject to graph neural networks."}, {"role": "user", "content": "Keep the number at four."}],
-      "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "papers", "args": {"query": "graph neural networks", "max_results": 4}}]},
-      "metadata": {"what_it_tests": "A corrected paper topic replaces the earlier topic while the prior result count carries over."}
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Viết email báo cáo công việc"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có muốn gửi nội dung này không?"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, gửi đi"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "hard"
+      }
     },
     {
-      "id": "G08_multiturn_news_timeframe",
+      "id": "G09_multi_missing_info",
       "phase": "B",
-      "turns": [{"role": "user", "content": "Find climate technology news this week."}, {"role": "user", "content": "What about quantum computing instead?"}, {"role": "user", "content": "Search the web only, still for this week."}],
-      "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "quantum computing", "topic": "news", "timeframe": "week"}}]},
-      "metadata": {"what_it_tests": "Topic correction and timeframe carryover route to one web-news lookup."}
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 5 tweet gần nhất đi"
+        },
+        {
+          "role": "assistant",
+          "content": "Của ai cơ?"
+        },
+        {
+          "role": "user",
+          "content": "Của Bill Gates"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "medium"
+      }
     },
     {
-      "id": "G09_multiturn_social_sort",
+      "id": "G10_multi_url_summary",
       "phase": "B",
-      "turns": [{"role": "user", "content": "Show recent social posts about OpenAI."}, {"role": "user", "content": "Make them the most popular posts instead."}, {"role": "user", "content": "Keep the topic OpenAI and show 3."}],
-      "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "OpenAI", "search_type": "Top", "limit": 3}}]},
-      "metadata": {"what_it_tests": "Social topic carries over, popularity selects Top, and the latest count is applied."}
-    },
-    {
-      "id": "G10_multiturn_paper_url",
-      "phase": "B",
-      "turns": [{"role": "user", "content": "Read this arXiv paper for me."}, {"role": "user", "content": "Its URL is https://arxiv.org/abs/1706.03762"}, {"role": "user", "content": "Read only that paper."}],
-      "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "paper_text", "args": {"arxiv_url": "https://arxiv.org/abs/1706.03762"}}]},
-      "metadata": {"what_it_tests": "After a missing paper URL is supplied, the final request reads that exact arXiv paper."}
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Link này nói về cái gì: https://google.com"
+        },
+        {
+          "role": "assistant",
+          "content": "Đây là trang chủ Google"
+        },
+        {
+          "role": "user",
+          "content": "Thế còn https://apple.com thì sao?"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://apple.com"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multi_turn",
+        "difficulty": "easy"
+      }
     }
   ]
 }

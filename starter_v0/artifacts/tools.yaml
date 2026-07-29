@@ -77,14 +77,14 @@ tools:
         headline: {type: string, default: "", description: "Tiêu đề"}
       required: [items, template]
 
-  - name: keywords
-    description: "Extract the most meaningful keywords from text already supplied by the user. Use only for explicit keyword/tag extraction; it does not search the web."
+  # ---------------- Custom Tools ----------------
+  - name: stock_price
+    description: "Lấy giá cổ phiếu hiện tại của một công ty dựa trên mã chứng khoán (ticker). Chỉ dùng khi người dùng cụ thể hỏi về giá cổ phiếu."
     parameters:
       type: object
       properties:
-        text: {type: string, default: "", description: "Text to analyze"}
-        max_keywords: {type: integer, default: 5, description: "Number of keywords to return"}
-      required: [text]
+        ticker: {type: string, default: "", description: "Mã chứng khoán của công ty (ví dụ: 'AAPL', 'GOOGL', 'TSLA')."}
+      required: [ticker]
 
   # ---------------- Bonus tools ----------------
   - name: send
