@@ -5,6 +5,8 @@ Vũ Minh Quang - 2A202601515
 Lương Ngọc Quang - 2A202601563
 Nguyễn Quốc Thịnh	- 2A202601675
 
+# Lab 04 completed
+
 # Day 04 Lab v2 — Research Agent Tool Eval
 
 ## Brief
