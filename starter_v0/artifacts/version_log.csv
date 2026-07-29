@@ -1,3 +1,4 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
-v1,Tên_nhóm,system_prompt.md,,,,,Sửa prompt để chặn đoán bừa và cấm làm toán,tool_routing_accuracy,0.8571,0.7857,tên_file_json_v1_của_bạn
-v2,Tên_nhóm,tools.yaml,,,,,Làm rõ mô tả timeline và social_search tránh nhầm lẫn,tool_routing_accuracy,0.7857,0.8889,tên_file_json_v2_mới_nhất_của_bạn
+v1,G29,system_prompt.md,,,,,Sửa prompt để chặn đoán bừa và cấm làm toán,tool_routing_accuracy,0.8571,0.7857,tên_file_json_v1_của_bạn
+v2,G29,tools.yaml,,,,,Làm rõ mô tả timeline và social_search tránh nhầm lẫn,tool_routing_accuracy,0.7857,0.8889,tên_file_json_v2_mới_nhất_của_bạn
+v3,G29,eval_group.json,,,,,Tạo 10 câu hỏi riêng để test độ thông minh của AI,tool_routing_accuracy,0.8889,0.8571,tên_file_json_v3_của_bạn
