@@ -1,3 +1,10 @@
+Nguyễn Hoàng Minh	- 2A202601229
+Nguyễn Gia Thiều - 2A202601759
+Phạm Trung Kiên - 2A202601525
+Vũ Minh Quang - 2A202601515
+Lương Ngọc Quang - 2A202601563
+Nguyễn Quốc Thịnh	- 2A202601675
+
 # Day 04 Lab v2 — Research Agent Tool Eval
 
 ## Brief
