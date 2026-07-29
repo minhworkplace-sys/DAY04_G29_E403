@@ -79,7 +79,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.1-flash-lite",
+        default_model: str = "gemini-3.5-flash-lite",
         max_retries: int = 5,
         retry_base_delay: float = 20.0,
     ) -> None:
